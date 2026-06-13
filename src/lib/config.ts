@@ -3,5 +3,5 @@ export const APP_CONFIG = {
   maxVoiceSampleMb: 10,
   maxAsrFileMb: 100,
   maxHistoryItems: 50,
-  defaultAudioFormat: "wav" as const,
+  defaultAudioFormat: 'wav' as const,
 };

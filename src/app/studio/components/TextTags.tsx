@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { TEXT_TAGS } from "@/lib/text-tags";
-import type { TTSMode } from "@/types";
+import { TEXT_TAGS } from '@/lib/text-tags';
+import type { TTSMode } from '@/types';
 
 interface TextTagsProps {
   mode: TTSMode;
@@ -9,9 +9,7 @@ interface TextTagsProps {
 }
 
 export function TextTags({ mode, onInsert }: TextTagsProps) {
-  const tags = TEXT_TAGS.filter(
-    (tag) => !tag.presetOnly || mode === "preset"
-  );
+  const tags = TEXT_TAGS.filter((tag) => !tag.presetOnly || mode === 'preset');
 
   return (
     <div>

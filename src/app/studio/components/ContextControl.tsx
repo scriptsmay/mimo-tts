@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { CONTEXT_PRESETS } from "@/lib/context-presets";
-import type { TTSMode } from "@/types";
+import { CONTEXT_PRESETS } from '@/lib/context-presets';
+import type { TTSMode } from '@/types';
 
 interface ContextControlProps {
   mode: TTSMode;
@@ -14,9 +14,7 @@ export function ContextControl({ mode, value, onChange }: ContextControlProps) {
 
   return (
     <div>
-      <label className="text-sm font-medium mb-2 block">
-        自然语言控制
-      </label>
+      <label className="text-sm font-medium mb-2 block">自然语言控制</label>
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -25,9 +23,7 @@ export function ContextControl({ mode, value, onChange }: ContextControlProps) {
       />
       {presets.length > 0 && (
         <div className="mt-2 space-y-1">
-          <div className="text-xs text-[var(--muted-foreground)]">
-            声线预设
-          </div>
+          <div className="text-xs text-[var(--muted-foreground)]">声线预设</div>
           {presets.map((preset, i) => (
             <button
               key={i}

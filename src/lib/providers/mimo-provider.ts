@@ -4,7 +4,7 @@ export interface TTSRequest {
   context: string;
   voice?: string;
   voiceSample?: Buffer;
-  responseFormat?: "wav" | "mp3" | "opus";
+  responseFormat?: 'wav' | 'mp3' | 'opus';
 }
 
 export interface TTSResponse {
@@ -20,8 +20,8 @@ export interface ASRRequest {
   audioMimeType: string;
   language?: string;
   prompt?: string;
-  responseFormat?: "verbose_json" | "text";
-  timestampGranularity?: "segment" | "word";
+  responseFormat?: 'verbose_json' | 'text';
+  timestampGranularity?: 'segment' | 'word';
   signal?: AbortSignal;
 }
 

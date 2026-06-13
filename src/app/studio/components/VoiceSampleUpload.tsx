@@ -1,21 +1,17 @@
-"use client";
+'use client';
 
-import { Upload, X, Music } from "lucide-react";
-import { useRef } from "react";
-import { APP_CONFIG } from "@/lib/config";
+import { Upload, X, Music } from 'lucide-react';
+import { useRef } from 'react';
+import { APP_CONFIG } from '@/lib/config';
 
 interface VoiceSampleUploadProps {
   file: File | null;
   onChange: (file: File | null) => void;
 }
 
-const ACCEPT =
-  ".mp3,.wav,.m4a,.mp4,.flac,.ogg,.oga,.webm,.mpga,audio/*";
+const ACCEPT = '.mp3,.wav,.m4a,.mp4,.flac,.ogg,.oga,.webm,.mpga,audio/*';
 
-export function VoiceSampleUpload({
-  file,
-  onChange,
-}: VoiceSampleUploadProps) {
+export function VoiceSampleUpload({ file, onChange }: VoiceSampleUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,14 +34,9 @@ export function VoiceSampleUpload({
           <Music size={18} className="text-[var(--accent)]" />
           <div className="flex-1 min-w-0">
             <div className="text-sm truncate">{file.name}</div>
-            <div className="text-xs text-[var(--muted-foreground)]">
-              {(file.size / 1024 / 1024).toFixed(1)} MB
-            </div>
+            <div className="text-xs text-[var(--muted-foreground)]">{(file.size / 1024 / 1024).toFixed(1)} MB</div>
           </div>
-          <button
-            onClick={() => onChange(null)}
-            className="p-1 hover:bg-[var(--muted)]/30 rounded"
-          >
+          <button onClick={() => onChange(null)} className="p-1 hover:bg-[var(--muted)]/30 rounded">
             <X size={16} />
           </button>
         </div>
@@ -58,18 +49,10 @@ export function VoiceSampleUpload({
           <span className="text-sm text-[var(--muted-foreground)]">
             上传声音样本（最大 {APP_CONFIG.maxVoiceSampleMb} MB）
           </span>
-          <span className="text-xs text-[var(--muted)]">
-            mp3, wav, m4a, flac, ogg, webm
-          </span>
+          <span className="text-xs text-[var(--muted)]">mp3, wav, m4a, flac, ogg, webm</span>
         </button>
       )}
-      <input
-        ref={inputRef}
-        type="file"
-        accept={ACCEPT}
-        onChange={handleChange}
-        className="hidden"
-      />
+      <input ref={inputRef} type="file" accept={ACCEPT} onChange={handleChange} className="hidden" />
     </div>
   );
 }

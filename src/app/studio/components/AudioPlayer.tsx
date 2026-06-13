@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useRef, useEffect, useState } from "react";
-import { Play, Pause, Download, RotateCcw } from "lucide-react";
+import { useRef, useEffect, useState } from 'react';
+import { Play, Pause, Download, RotateCcw } from 'lucide-react';
 
 interface AudioPlayerProps {
   audioUrl: string | null;
@@ -21,14 +21,14 @@ export function AudioPlayer({ audioUrl }: AudioPlayerProps) {
     const onDuration = () => setDuration(audio.duration);
     const onEnded = () => setPlaying(false);
 
-    audio.addEventListener("timeupdate", onTime);
-    audio.addEventListener("loadedmetadata", onDuration);
-    audio.addEventListener("ended", onEnded);
+    audio.addEventListener('timeupdate', onTime);
+    audio.addEventListener('loadedmetadata', onDuration);
+    audio.addEventListener('ended', onEnded);
 
     return () => {
-      audio.removeEventListener("timeupdate", onTime);
-      audio.removeEventListener("loadedmetadata", onDuration);
-      audio.removeEventListener("ended", onEnded);
+      audio.removeEventListener('timeupdate', onTime);
+      audio.removeEventListener('loadedmetadata', onDuration);
+      audio.removeEventListener('ended', onEnded);
     };
   }, [audioUrl]);
 
@@ -60,15 +60,13 @@ export function AudioPlayer({ audioUrl }: AudioPlayerProps) {
   const formatTime = (s: number) => {
     const m = Math.floor(s / 60);
     const sec = Math.floor(s % 60);
-    return `${m}:${sec.toString().padStart(2, "0")}`;
+    return `${m}:${sec.toString().padStart(2, '0')}`;
   };
 
   if (!audioUrl) {
     return (
       <div className="p-4 border-b border-[var(--card-border)]">
-        <div className="text-sm text-[var(--muted-foreground)] text-center py-6">
-          等待生成
-        </div>
+        <div className="text-sm text-[var(--muted-foreground)] text-center py-6">等待生成</div>
       </div>
     );
   }
@@ -88,9 +86,7 @@ export function AudioPlayer({ audioUrl }: AudioPlayerProps) {
             <div
               className="h-full bg-[var(--accent)] rounded-full transition-all"
               style={{
-                width: duration
-                  ? `${(currentTime / duration) * 100}%`
-                  : "0%",
+                width: duration ? `${(currentTime / duration) * 100}%` : '0%',
               }}
             />
           </div>
@@ -99,11 +95,7 @@ export function AudioPlayer({ audioUrl }: AudioPlayerProps) {
             <span>{formatTime(duration)}</span>
           </div>
         </div>
-        <button
-          onClick={restart}
-          className="p-2 hover:bg-[var(--muted)]/30 rounded"
-          title="重新播放"
-        >
+        <button onClick={restart} className="p-2 hover:bg-[var(--muted)]/30 rounded" title="重新播放">
           <RotateCcw size={14} />
         </button>
         <a

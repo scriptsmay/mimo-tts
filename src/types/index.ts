@@ -1,9 +1,9 @@
-export type Gender = "female" | "male";
+export type Gender = 'female' | 'male';
 
 export interface Voice {
   id: string;
   name: string;
-  language: "zh" | "en";
+  language: 'zh' | 'en';
   gender: Gender;
   style: string;
   previewText: string;
@@ -13,11 +13,11 @@ export interface Voice {
 export interface TextTag {
   label: string;
   value: string;
-  target: "text";
+  target: 'text';
   presetOnly?: boolean;
 }
 
-export type TTSMode = "preset" | "design" | "clone";
+export type TTSMode = 'preset' | 'design' | 'clone';
 
 export interface TTSFormData {
   mode: TTSMode;
@@ -31,8 +31,8 @@ export interface ASRFormData {
   audioFile: File;
   language: string;
   prompt: string;
-  responseFormat: "verbose_json" | "text";
-  timestampGranularity: "segment" | "word";
+  responseFormat: 'verbose_json' | 'text';
+  timestampGranularity: 'segment' | 'word';
 }
 
 export interface ASRSegment {
@@ -48,7 +48,7 @@ export interface ASRResponse {
 
 export interface HistoryItem {
   id: string;
-  mode: TTSMode | "asr";
+  mode: TTSMode | 'asr';
   text: string;
   voice?: string;
   context?: string;

@@ -1,23 +1,23 @@
-"use client";
+'use client';
 
-import type { TTSMode } from "@/types";
+import type { TTSMode } from '@/types';
 
 interface TopBarProps {
-  mode: TTSMode | "asr";
+  mode: TTSMode | 'asr';
   voice?: string;
 }
 
 const MODE_LABELS: Record<string, string> = {
-  preset: "Preset Voice",
-  design: "Voice Design",
-  clone: "Voice Clone",
-  asr: "ASR",
+  preset: 'Preset Voice',
+  design: 'Voice Design',
+  clone: 'Voice Clone',
+  asr: 'ASR',
 };
 
 export function TopBar({ mode, voice }: TopBarProps) {
-  const breadcrumbs = [MODE_LABELS[mode], "MiMo V2.5"];
+  const breadcrumbs = [MODE_LABELS[mode], 'MiMo V2.5'];
   if (voice) breadcrumbs.splice(1, 0, voice);
-  breadcrumbs.push("WAV");
+  breadcrumbs.push('WAV');
 
   return (
     <div className="h-12 border-b border-[var(--card-border)] flex items-center px-4 bg-[var(--card)]">

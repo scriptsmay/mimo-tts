@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { APP_CONFIG } from "@/lib/config";
-import { ProgressBar } from "./ProgressBar";
+import { APP_CONFIG } from '@/lib/config';
+import { ProgressBar } from './ProgressBar';
 
 interface TextInputProps {
   value: string;

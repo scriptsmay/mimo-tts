@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { Mic, Wand2, Copy, Speech } from "lucide-react";
-import type { TTSMode } from "@/types";
-import { cn } from "@/lib/utils";
+import { Mic, Wand2, Copy, Speech } from 'lucide-react';
+import type { TTSMode } from '@/types';
+import { cn } from '@/lib/utils';
 
 interface SidebarProps {
-  activeMode: TTSMode | "asr";
-  onModeChange: (mode: TTSMode | "asr") => void;
+  activeMode: TTSMode | 'asr';
+  onModeChange: (mode: TTSMode | 'asr') => void;
 }
 
 const NAV_ITEMS = [
-  { mode: "preset" as TTSMode, label: "文字转语音", icon: Mic },
-  { mode: "design" as TTSMode, label: "音色设计", icon: Wand2 },
-  { mode: "clone" as TTSMode, label: "声音克隆", icon: Copy },
-  { mode: "asr" as const, label: "语音转文字", icon: Speech },
+  { mode: 'preset' as TTSMode, label: '文字转语音', icon: Mic },
+  { mode: 'design' as TTSMode, label: '音色设计', icon: Wand2 },
+  { mode: 'clone' as TTSMode, label: '声音克隆', icon: Copy },
+  { mode: 'asr' as const, label: '语音转文字', icon: Speech },
 ];
 
 export function Sidebar({ activeMode, onModeChange }: SidebarProps) {
@@ -31,10 +31,10 @@ export function Sidebar({ activeMode, onModeChange }: SidebarProps) {
               key={item.mode}
               onClick={() => onModeChange(item.mode)}
               className={cn(
-                "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors",
+                'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors',
                 isActive
-                  ? "bg-[var(--accent)] text-white"
-                  : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/30"
+                  ? 'bg-[var(--accent)] text-white'
+                  : 'text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]/30'
               )}
             >
               <Icon size={18} />

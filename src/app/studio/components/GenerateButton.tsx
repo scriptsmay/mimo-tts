@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Loader2, Square, Play } from "lucide-react";
+import { Square, Play } from 'lucide-react';
 
 interface GenerateButtonProps {
   generating: boolean;
@@ -9,12 +9,7 @@ interface GenerateButtonProps {
   onStop: () => void;
 }
 
-export function GenerateButton({
-  generating,
-  disabled,
-  onGenerate,
-  onStop,
-}: GenerateButtonProps) {
+export function GenerateButton({ generating, disabled, onGenerate, onStop }: GenerateButtonProps) {
   if (generating) {
     return (
       <button

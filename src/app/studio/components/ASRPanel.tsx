@@ -1,31 +1,27 @@
-"use client";
+'use client';
 
-import { useState, useRef } from "react";
-import { Upload, X, FileAudio, Loader2, Copy, Check } from "lucide-react";
-import { APP_CONFIG } from "@/lib/config";
-import type { ASRResponse } from "@/types";
+import { useState, useRef } from 'react';
+import { Upload, X, FileAudio, Loader2, Copy, Check } from 'lucide-react';
+import { APP_CONFIG } from '@/lib/config';
+import type { ASRResponse } from '@/types';
 
 const LANGUAGES = [
-  { value: "auto", label: "自动" },
-  { value: "zh", label: "中文" },
-  { value: "en", label: "English" },
-  { value: "ja", label: "日本語" },
-  { value: "ko", label: "한국어" },
-  { value: "fr", label: "Français" },
-  { value: "de", label: "Deutsch" },
-  { value: "es", label: "Español" },
+  { value: 'auto', label: '自动' },
+  { value: 'zh', label: '中文' },
+  { value: 'en', label: 'English' },
+  { value: 'ja', label: '日本語' },
+  { value: 'ko', label: '한국어' },
+  { value: 'fr', label: 'Français' },
+  { value: 'de', label: 'Deutsch' },
+  { value: 'es', label: 'Español' },
 ];
 
 export function ASRPanel() {
   const [file, setFile] = useState<File | null>(null);
-  const [language, setLanguage] = useState("auto");
-  const [prompt, setPrompt] = useState("");
-  const [responseFormat, setResponseFormat] = useState<"verbose_json" | "text">(
-    "verbose_json"
-  );
-  const [timestampGranularity, setTimestampGranularity] = useState<
-    "segment" | "word"
-  >("segment");
+  const [language, setLanguage] = useState('auto');
+  const [prompt, setPrompt] = useState('');
+  const [responseFormat, setResponseFormat] = useState<'verbose_json' | 'text'>('verbose_json');
+  const [timestampGranularity, setTimestampGranularity] = useState<'segment' | 'word'>('segment');
   const [result, setResult] = useState<ASRResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -55,33 +51,33 @@ export function ASRPanel() {
     setResult(null);
 
     const formData = new FormData();
-    formData.set("audioFile", file);
-    formData.set("language", language);
-    formData.set("prompt", prompt);
-    formData.set("responseFormat", responseFormat);
-    formData.set("timestampGranularity", timestampGranularity);
+    formData.set('audioFile', file);
+    formData.set('language', language);
+    formData.set('prompt', prompt);
+    formData.set('responseFormat', responseFormat);
+    formData.set('timestampGranularity', timestampGranularity);
 
     abortRef.current = new AbortController();
 
     try {
-      const res = await fetch("/api/asr", {
-        method: "POST",
+      const res = await fetch('/api/asr', {
+        method: 'POST',
         body: formData,
         signal: abortRef.current.signal,
       });
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || "识别失败");
+        throw new Error(data.error || '识别失败');
       }
 
       const data = await res.json();
       setResult(data);
     } catch (err: unknown) {
-      if (err instanceof Error && err.name === "AbortError") {
-        setError("已取消识别");
+      if (err instanceof Error && err.name === 'AbortError') {
+        setError('已取消识别');
       } else {
-        setError(err instanceof Error ? err.message : "识别失败");
+        setError(err instanceof Error ? err.message : '识别失败');
       }
     } finally {
       setLoading(false);
@@ -105,14 +101,9 @@ export function ASRPanel() {
             <FileAudio size={18} className="text-[var(--accent)]" />
             <div className="flex-1 min-w-0">
               <div className="text-sm truncate">{file.name}</div>
-              <div className="text-xs text-[var(--muted-foreground)]">
-                {(file.size / 1024 / 1024).toFixed(1)} MB
-              </div>
+              <div className="text-xs text-[var(--muted-foreground)]">{(file.size / 1024 / 1024).toFixed(1)} MB</div>
             </div>
-            <button
-              onClick={() => setFile(null)}
-              className="p-1 hover:bg-[var(--muted)]/30 rounded"
-            >
+            <button onClick={() => setFile(null)} className="p-1 hover:bg-[var(--muted)]/30 rounded">
               <X size={16} />
             </button>
           </div>
@@ -127,13 +118,7 @@ export function ASRPanel() {
             </span>
           </button>
         )}
-        <input
-          ref={inputRef}
-          type="file"
-          accept="audio/*,video/*"
-          onChange={handleFileChange}
-          className="hidden"
-        />
+        <input ref={inputRef} type="file" accept="audio/*,video/*" onChange={handleFileChange} className="hidden" />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -155,9 +140,7 @@ export function ASRPanel() {
           <label className="text-sm font-medium mb-2 block">输出格式</label>
           <select
             value={responseFormat}
-            onChange={(e) =>
-              setResponseFormat(e.target.value as "verbose_json" | "text")
-            }
+            onChange={(e) => setResponseFormat(e.target.value as 'verbose_json' | 'text')}
             className="w-full bg-[var(--card)] border border-[var(--card-border)] rounded-lg p-2 text-sm focus:outline-none focus:border-[var(--accent)]"
           >
             <option value="verbose_json">详细 JSON</option>
@@ -167,30 +150,26 @@ export function ASRPanel() {
       </div>
 
       <div>
-        <label className="text-sm font-medium mb-2 block">
-          时间粒度
-        </label>
+        <label className="text-sm font-medium mb-2 block">时间粒度</label>
         <div className="flex gap-2">
-          {(["segment", "word"] as const).map((g) => (
+          {(['segment', 'word'] as const).map((g) => (
             <button
               key={g}
               onClick={() => setTimestampGranularity(g)}
               className={`flex-1 py-2 text-sm rounded-lg transition-colors ${
                 timestampGranularity === g
-                  ? "bg-[var(--accent)] text-white"
-                  : "bg-[var(--muted)]/30 text-[var(--muted-foreground)]"
+                  ? 'bg-[var(--accent)] text-white'
+                  : 'bg-[var(--muted)]/30 text-[var(--muted-foreground)]'
               }`}
             >
-              {g === "segment" ? "段落" : "单词"}
+              {g === 'segment' ? '段落' : '单词'}
             </button>
           ))}
         </div>
       </div>
 
       <div>
-        <label className="text-sm font-medium mb-2 block">
-          提示词（可选）
-        </label>
+        <label className="text-sm font-medium mb-2 block">提示词（可选）</label>
         <input
           type="text"
           value={prompt}
@@ -213,16 +192,12 @@ export function ASRPanel() {
           disabled={!file}
           className="w-full py-3 bg-[var(--accent)] hover:bg-[var(--accent-hover)] disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-lg flex items-center justify-center gap-2 transition-colors"
         >
-          {loading ? (
-            <Loader2 size={16} className="animate-spin" />
-          ) : null}
+          {loading ? <Loader2 size={16} className="animate-spin" /> : null}
           开始识别
         </button>
       )}
 
-      {error && (
-        <div className="text-[var(--error)] text-sm">{error}</div>
-      )}
+      {error && <div className="text-[var(--error)] text-sm">{error}</div>}
 
       {result && (
         <div className="space-y-3">
@@ -232,12 +207,8 @@ export function ASRPanel() {
               onClick={handleCopy}
               className="flex items-center gap-1 text-xs text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
             >
-              {copied ? (
-                <Check size={12} />
-              ) : (
-                <Copy size={12} />
-              )}
-              {copied ? "已复制" : "复制"}
+              {copied ? <Check size={12} /> : <Copy size={12} />}
+              {copied ? '已复制' : '复制'}
             </button>
           </div>
           <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-lg p-4 text-sm whitespace-pre-wrap max-h-60 overflow-y-auto">
@@ -245,15 +216,10 @@ export function ASRPanel() {
           </div>
           {result.segments && result.segments.length > 0 && (
             <div>
-              <label className="text-xs text-[var(--muted-foreground)] mb-1 block">
-                时间轴
-              </label>
+              <label className="text-xs text-[var(--muted-foreground)] mb-1 block">时间轴</label>
               <div className="space-y-1 max-h-40 overflow-y-auto">
                 {result.segments.map((seg, i) => (
-                  <div
-                    key={i}
-                    className="flex gap-3 text-xs p-2 bg-[var(--muted)]/10 rounded"
-                  >
+                  <div key={i} className="flex gap-3 text-xs p-2 bg-[var(--muted)]/10 rounded">
                     <span className="text-[var(--accent)] font-mono w-20 shrink-0">
                       {seg.start.toFixed(1)}s - {seg.end.toFixed(1)}s
                     </span>

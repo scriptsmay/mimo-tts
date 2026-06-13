@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 interface ProgressBarProps {
   current: number;
@@ -12,9 +12,7 @@ export function ProgressBar({ current, max }: ProgressBarProps) {
   return (
     <div className="h-1 bg-[var(--muted)]/20 rounded-full mt-1 overflow-hidden">
       <div
-        className={`h-full rounded-full transition-all ${
-          isNearLimit ? "bg-[var(--warning)]" : "bg-[var(--accent)]"
-        }`}
+        className={`h-full rounded-full transition-all ${isNearLimit ? 'bg-[var(--warning)]' : 'bg-[var(--accent)]'}`}
         style={{ width: `${pct}%` }}
       />
     </div>
