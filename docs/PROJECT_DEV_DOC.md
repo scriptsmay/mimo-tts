@@ -2,7 +2,7 @@
 
 ### 1. 项目概述
 
-本项目的目标是将 [MimoTTS Studio](https://tts.cngov.cc.cd/) 的参数定义与语音生成功能完全复刻，后端接入自定义的 Mimo Provider。技术栈采用 Next.js 全栈方案（App Router），前端使用 React + Tailwind CSS，后端使用 Next.js Route Handlers 作为 API 层。
+本项目的目标是将 MimoTTS Studio 的参数定义与语音生成功能完全复刻，后端接入自定义的 Mimo Provider。技术栈采用 Next.js 全栈方案（App Router），前端使用 React + Tailwind CSS，后端使用 Next.js Route Handlers 作为 API 层。
 
 本项目为**纯自托管工具**，不需要认证登录、额度管理和管理后台。部署后即可直接使用，API Key 在服务端环境变量中统一配置。
 

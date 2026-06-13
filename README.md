@@ -1,6 +1,6 @@
 # MimoTTS Studio
 
-基于 Next.js 全栈的 TTS/ASR 工具，复刻 [tts.cngov.cc](https://tts.cngov.cc/) 的参数定义与语音生成功能，后端接入自定义 Mimo Provider。
+基于 Next.js 全栈的 TTS/ASR 工具，复刻 MimoTTS Studio 的参数定义与语音生成功能，后端接入自定义 Mimo Provider。
 
 **纯自托管** — 无需认证、无需数据库、部署即用。
 

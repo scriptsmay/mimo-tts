@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-MimoTTS Studio — Next.js 全栈 TTS/ASR 工具，复刻 tts.cngov.cc 的参数定义与语音生成功能，后端接入自定义 Mimo Provider。纯自托管，无需认证和数据库。
+MimoTTS Studio — Next.js 全栈 TTS/ASR 工具，后端接入自定义 Mimo Provider。纯自托管，无需认证和数据库。
 
 ## Tech Stack
 
