@@ -15,7 +15,7 @@ export function AudioPlayer({ audioUrl }: AudioPlayerProps) {
 
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio || !audioUrl) return;
 
     const onTime = () => setCurrentTime(audio.currentTime);
     const onDuration = () => setDuration(audio.duration);
@@ -25,19 +25,22 @@ export function AudioPlayer({ audioUrl }: AudioPlayerProps) {
     audio.addEventListener("loadedmetadata", onDuration);
     audio.addEventListener("ended", onEnded);
 
+    audio.load();
+    setCurrentTime(0);
+    setDuration(0);
+    setPlaying(false);
+
+    const onCanPlay = () => {
+      audio.play().then(() => setPlaying(true)).catch(() => {});
+    };
+    audio.addEventListener("canplay", onCanPlay, { once: true });
+
     return () => {
       audio.removeEventListener("timeupdate", onTime);
       audio.removeEventListener("loadedmetadata", onDuration);
       audio.removeEventListener("ended", onEnded);
+      audio.removeEventListener("canplay", onCanPlay);
     };
-  }, [audioUrl]);
-
-  useEffect(() => {
-    if (audioRef.current && audioUrl) {
-      audioRef.current.load();
-      setPlaying(false);
-      setCurrentTime(0);
-    }
   }, [audioUrl]);
 
   const toggle = () => {
