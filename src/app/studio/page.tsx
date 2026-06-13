@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { AppShell } from "./components/AppShell";
 import { Sidebar } from "./components/Sidebar";
 import { TopBar } from "./components/TopBar";
@@ -33,14 +33,16 @@ export default function StudioPage() {
   const [playingItemId, setPlayingItemId] = useState<string | null>(null);
   const [previewingVoiceId, setPreviewingVoiceId] = useState<string | null>(null);
   const previewAbortRef = useRef<AbortController | null>(null);
-  const [history, setHistory] = useState<HistoryItem[]>(() => {
-    if (typeof window === "undefined") return [];
+  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [historyLoaded, setHistoryLoaded] = useState(false);
+
+  useEffect(() => {
     try {
-      return JSON.parse(localStorage.getItem("mimo-tts-history") || "[]");
-    } catch {
-      return [];
-    }
-  });
+      const stored = localStorage.getItem("mimo-tts-history");
+      if (stored) setHistory(JSON.parse(stored));
+    } catch {}
+    setHistoryLoaded(true);
+  }, []);
 
   const abortRef = useRef<AbortController | null>(null);
 
