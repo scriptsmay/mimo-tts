@@ -1,19 +1,23 @@
 "use client";
 
-import { User } from "lucide-react";
+import { User, Headphones, Loader2 } from "lucide-react";
 import type { Voice } from "@/types";
 import { cn } from "@/lib/utils";
 
 interface VoiceSelectorProps {
   voices: Voice[];
   selected: Voice;
+  previewingVoiceId: string | null;
   onSelect: (voice: Voice) => void;
+  onPreview: (voice: Voice) => void;
 }
 
 export function VoiceSelector({
   voices,
   selected,
+  previewingVoiceId,
   onSelect,
+  onPreview,
 }: VoiceSelectorProps) {
   const zhVoices = voices.filter((v) => v.language === "zh");
   const enVoices = voices.filter((v) => v.language === "en");
@@ -28,13 +32,17 @@ export function VoiceSelector({
           label="中文"
           voices={zhVoices}
           selected={selected}
+          previewingVoiceId={previewingVoiceId}
           onSelect={onSelect}
+          onPreview={onPreview}
         />
         <VoiceGroup
           label="English"
           voices={enVoices}
           selected={selected}
+          previewingVoiceId={previewingVoiceId}
           onSelect={onSelect}
+          onPreview={onPreview}
         />
       </div>
     </div>
@@ -45,12 +53,16 @@ function VoiceGroup({
   label,
   voices,
   selected,
+  previewingVoiceId,
   onSelect,
+  onPreview,
 }: {
   label: string;
   voices: Voice[];
   selected: Voice;
+  previewingVoiceId: string | null;
   onSelect: (v: Voice) => void;
+  onPreview: (v: Voice) => void;
 }) {
   return (
     <div>
@@ -60,12 +72,12 @@ function VoiceGroup({
       <div className="grid grid-cols-2 gap-2.5">
         {voices.map((voice) => {
           const isSelected = selected.id === voice.id;
+          const isPreviewing = previewingVoiceId === voice.id;
           return (
-            <button
+            <div
               key={voice.id}
-              onClick={() => onSelect(voice)}
               className={cn(
-                "flex items-center gap-3 p-3.5 rounded-xl text-left text-sm transition-all duration-200 border-[1.5px]",
+                "relative flex items-center gap-3 p-3.5 rounded-xl text-left text-sm transition-all duration-200 border-[1.5px] cursor-pointer group",
                 isSelected
                   ? "border-[var(--accent)] bg-[var(--accent)]/8"
                   : "border-[var(--card-border)] bg-[var(--card)] hover:border-[var(--card-border-hover)]"
@@ -75,6 +87,7 @@ function VoiceGroup({
                   ? { boxShadow: "0 0 0 1px rgba(124, 92, 252, 0.2)" }
                   : {}
               }
+              onClick={() => onSelect(voice)}
             >
               <div
                 className={cn(
@@ -94,7 +107,27 @@ function VoiceGroup({
                   {voice.style}
                 </div>
               </div>
-            </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onPreview(voice);
+                }}
+                disabled={isPreviewing}
+                className={cn(
+                  "absolute top-2 right-2 w-6 h-6 rounded-md flex items-center justify-center transition-all duration-200",
+                  isPreviewing
+                    ? "bg-[var(--accent)]/20 text-[var(--accent)]"
+                    : "opacity-0 group-hover:opacity-100 bg-[var(--muted)]/30 hover:bg-[var(--accent)]/20 text-[var(--muted-foreground)] hover:text-[var(--accent)]"
+                )}
+                title={`试听 ${voice.name}`}
+              >
+                {isPreviewing ? (
+                  <Loader2 size={12} className="animate-spin" />
+                ) : (
+                  <Headphones size={12} />
+                )}
+              </button>
+            </div>
           );
         })}
       </div>

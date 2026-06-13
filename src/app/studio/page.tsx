@@ -31,6 +31,8 @@ export default function StudioPage() {
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [playingItemId, setPlayingItemId] = useState<string | null>(null);
+  const [previewingVoiceId, setPreviewingVoiceId] = useState<string | null>(null);
+  const previewAbortRef = useRef<AbortController | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>(() => {
     if (typeof window === "undefined") return [];
     try {
@@ -137,6 +139,50 @@ export default function StudioPage() {
     }
   }, []);
 
+  const handlePreviewVoice = useCallback(
+    async (voice: Voice) => {
+      if (previewingVoiceId) return;
+
+      setPreviewingVoiceId(voice.id);
+      previewAbortRef.current = new AbortController();
+
+      try {
+        const res = await fetch("/api/tts", {
+          method: "POST",
+          body: (() => {
+            const fd = new FormData();
+            fd.set("mode", "preset");
+            fd.set("text", voice.previewText);
+            fd.set("context", voice.previewContext);
+            fd.set("voice", voice.id);
+            return fd;
+          })(),
+          signal: previewAbortRef.current.signal,
+        });
+
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.error || "试听失败");
+        }
+
+        const data = await res.json();
+        const uint8 = new Uint8Array(base64ToUint8Array(data.audio));
+        const blob = new Blob([uint8], { type: "audio/wav" });
+        const url = URL.createObjectURL(blob);
+        setAudioUrl(url);
+        setPlayingItemId(null);
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name !== "AbortError") {
+          setError(err.message);
+        }
+      } finally {
+        setPreviewingVoiceId(null);
+        previewAbortRef.current = null;
+      }
+    },
+    [previewingVoiceId]
+  );
+
   return (
     <AppShell
       sidebar={<Sidebar activeMode={mode} onModeChange={handleModeChange} />}
@@ -162,7 +208,9 @@ export default function StudioPage() {
                 <VoiceSelector
                   voices={PRESET_VOICES}
                   selected={selectedVoice}
+                  previewingVoiceId={previewingVoiceId}
                   onSelect={setSelectedVoice}
+                  onPreview={handlePreviewVoice}
                 />
               )}
               {mode === "clone" && (
