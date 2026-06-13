@@ -1,0 +1,11 @@
+services:
+  mimo-tts:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - MIMO_API_KEY=${MIMO_API_KEY}
+      - MIMO_BASE_URL=${MIMO_BASE_URL}
+      - MIMO_ASR_API_KEY=${MIMO_ASR_API_KEY}
+      - MIMO_ASR_BASE_URL=${MIMO_ASR_BASE_URL}
+    restart: unless-stopped
