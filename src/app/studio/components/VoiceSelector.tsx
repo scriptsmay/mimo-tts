@@ -69,7 +69,7 @@ function VoiceGroup({
       <div className="text-[11px] text-[var(--muted-foreground)] mb-2.5 font-medium">
         {label}
       </div>
-      <div className="grid grid-cols-2 gap-2.5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
         {voices.map((voice) => {
           const isSelected = selected.id === voice.id;
           const isPreviewing = previewingVoiceId === voice.id;
@@ -77,7 +77,7 @@ function VoiceGroup({
             <div
               key={voice.id}
               className={cn(
-                "relative flex items-center gap-3 p-3.5 rounded-xl text-left text-sm transition-all duration-200 border-[1.5px] cursor-pointer group",
+                "relative flex flex-col items-center gap-2 p-4 rounded-xl text-center text-sm transition-all duration-200 border-[1.5px] cursor-pointer",
                 isSelected
                   ? "border-[var(--accent)] bg-[var(--accent)]/8"
                   : "border-[var(--card-border)] bg-[var(--card)] hover:border-[var(--card-border-hover)]"
@@ -91,15 +91,15 @@ function VoiceGroup({
             >
               <div
                 className={cn(
-                  "w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0",
+                  "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
                   voice.gender === "female"
                     ? "bg-[rgba(236,72,153,0.12)] text-[#f472b6]"
                     : "bg-[rgba(96,165,250,0.12)] text-[#60a5fa]"
                 )}
               >
-                <User size={15} />
+                <User size={16} />
               </div>
-              <div className="flex-1 min-w-0">
+              <div className="min-w-0 w-full">
                 <div className="text-[13px] font-semibold truncate">
                   {voice.name}
                 </div>
@@ -114,17 +114,17 @@ function VoiceGroup({
                 }}
                 disabled={isPreviewing}
                 className={cn(
-                  "absolute top-2 right-2 w-6 h-6 rounded-md flex items-center justify-center transition-all duration-200",
+                  "w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200 shrink-0",
                   isPreviewing
                     ? "bg-[var(--accent)]/20 text-[var(--accent)]"
-                    : "opacity-0 group-hover:opacity-100 bg-[var(--muted)]/30 hover:bg-[var(--accent)]/20 text-[var(--muted-foreground)] hover:text-[var(--accent)]"
+                    : "bg-[var(--muted)]/25 hover:bg-[var(--accent)]/20 text-[var(--muted-foreground)] hover:text-[var(--accent)]"
                 )}
                 title={`试听 ${voice.name}`}
               >
                 {isPreviewing ? (
-                  <Loader2 size={12} className="animate-spin" />
+                  <Loader2 size={14} className="animate-spin" />
                 ) : (
-                  <Headphones size={12} />
+                  <Headphones size={14} />
                 )}
               </button>
             </div>
