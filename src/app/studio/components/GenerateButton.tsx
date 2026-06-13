@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader2, Square, Play } from "lucide-react";
+import { Square, Play } from "lucide-react";
 
 interface GenerateButtonProps {
   generating: boolean;

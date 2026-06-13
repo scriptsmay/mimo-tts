@@ -30,6 +30,7 @@ export default function StudioPage() {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [playingItemId, setPlayingItemId] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>(() => {
     if (typeof window === "undefined") return [];
     try {
@@ -62,6 +63,7 @@ export default function StudioPage() {
     setGenerating(true);
     setError(null);
     setAudioUrl(null);
+    setPlayingItemId(null);
 
     const formData = new FormData();
     formData.set("mode", mode);
@@ -131,6 +133,7 @@ export default function StudioPage() {
   const handlePlayHistory = useCallback((item: HistoryItem) => {
     if (item.audioUrl) {
       setAudioUrl(item.audioUrl);
+      setPlayingItemId(item.id);
     }
   }, []);
 
@@ -199,6 +202,7 @@ export default function StudioPage() {
           <AudioPlayer audioUrl={audioUrl} />
           <HistoryPanel
             items={history}
+            playingItemId={playingItemId}
             onPlay={handlePlayHistory}
             onClear={handleClearHistory}
           />
