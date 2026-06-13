@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 interface ProgressBarProps {
   current: number;
@@ -10,10 +10,15 @@ export function ProgressBar({ current, max }: ProgressBarProps) {
   const isNearLimit = pct > 80;
 
   return (
-    <div className="h-1 bg-[var(--muted)]/20 rounded-full mt-1 overflow-hidden">
+    <div className="h-[3px] bg-[var(--muted)]/20 rounded-full overflow-hidden">
       <div
-        className={`h-full rounded-full transition-all ${isNearLimit ? 'bg-[var(--warning)]' : 'bg-[var(--accent)]'}`}
-        style={{ width: `${pct}%` }}
+        className="h-full rounded-full transition-all duration-300"
+        style={{
+          width: `${pct}%`,
+          background: isNearLimit
+            ? "var(--warning)"
+            : "linear-gradient(90deg, var(--accent), var(--secondary))",
+        }}
       />
     </div>
   );

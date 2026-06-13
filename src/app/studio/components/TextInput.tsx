@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { APP_CONFIG } from '@/lib/config';
-import { ProgressBar } from './ProgressBar';
+import { APP_CONFIG } from "@/lib/config";
+import { ProgressBar } from "./ProgressBar";
 
 interface TextInputProps {
   value: string;
@@ -11,9 +11,9 @@ interface TextInputProps {
 export function TextInput({ value, onChange }: TextInputProps) {
   return (
     <div>
-      <div className="flex items-center justify-between mb-2">
-        <label className="text-sm font-medium">合成文本</label>
-        <span className="text-xs text-[var(--muted-foreground)]">
+      <div className="flex items-center justify-between mb-3">
+        <label className="text-[13px] font-semibold">合成文本</label>
+        <span className="text-[11px] text-[var(--muted-foreground)] bg-[var(--muted)]/20 px-2.5 py-1 rounded-md">
           {value.length} / {APP_CONFIG.maxTextLength}
         </span>
       </div>
@@ -25,9 +25,13 @@ export function TextInput({ value, onChange }: TextInputProps) {
           }
         }}
         placeholder="输入要合成的文本..."
-        className="w-full h-40 bg-[var(--card)] border border-[var(--card-border)] rounded-lg p-3 text-sm resize-none focus:outline-none focus:border-[var(--accent)] transition-colors"
+        className="w-full h-44 bg-[var(--card)] border border-[var(--card-border)] rounded-xl px-4 py-4 text-[14px] leading-relaxed resize-none focus:outline-none focus:border-[var(--accent)] transition-all duration-200 placeholder:text-[var(--muted)]"
       />
-      <ProgressBar current={value.length} max={APP_CONFIG.maxTextLength} />
+      <div className="flex items-center gap-3 mt-2">
+        <div className="flex-1">
+          <ProgressBar current={value.length} max={APP_CONFIG.maxTextLength} />
+        </div>
+      </div>
     </div>
   );
 }
