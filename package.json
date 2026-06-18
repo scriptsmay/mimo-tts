@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "pm2": "pm2 start ecosystem.config.js",
+    "pm2:stop": "pm2 delete mimo-tts"
   },
   "dependencies": {
     "lucide-react": "^1.18.0",
